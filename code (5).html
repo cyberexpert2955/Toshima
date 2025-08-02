@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sister's Day Wish - Toshima</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e1f5fe, #fce4ec);
+      color: #333;
+      text-align: center;
+      position: relative; /* Added for positioning heart container */
+    }
+    .header {
+      font-size: 2.5rem;
+      margin: 1rem 0;
+      color: #ff4081;
+      font-weight: bold;
+    }
+    .card {
+      background: white;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+    .btn-pink {
+      background: linear-gradient(to right, #ff69b4, #ff1493);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 25px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn-pink:hover {
+      background: linear-gradient(to right, #ff1493, #ff69b4);
+    }
+    .image-grid {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      padding: 1rem;
+    }
+    .img-card {
+      background: #fff;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 200px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: float 3s ease-in-out infinite; /* Floating effect */
+    }
+    .img-card:hover {
+      transform: translateY(-10px); /* Lift effect on hover */
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.7); /* Pink glow effect on hover */
+      filter: brightness(1.1); /* Light effect on hover */
+    }
+    .img-card img {
+      width: 100%;
+      display: block;
+      transition: transform 0.3s; /* Smooth transition for image */
+    }
+    .img-card:hover img {
+      transform: scale(1.05); /* Slightly enlarge image on hover */
+    }
+    .img-caption {
+      padding: 0.5rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .footer-message {
+      font-size: 1.5rem;
+      color: #ff4081;
+      margin: 2rem 0;
+    }
+    .small-hearts {
+      margin-top: 1rem;
+      font-size: 1.5rem;
+    }
+    .heart-icon {
+      font-size: 3rem;
+    }
+
+    /* Heart Animation Styles */
+    @keyframes floatHearts {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .heart-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 2rem;
+      animation: floatHearts 6s linear infinite;
+      color: #ff69b4;
+      opacity: 0.7;
+    }
+
+    /* Floating effect for images */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("name-form");
+      const input = document.getElementById("sisterName");
+      const greetingCard = document.getElementById("greeting-message");
+      const mainContent = document.getElementById("main-content");
+      const welcomeBanner = document.getElementById("welcome-banner");
+      const bgm = document.getElementById("bg-music");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const name = input.value.trim().toLowerCase();
+        if (!name) return;
+
+        if (name !== "toshima") {
+          alert("Wrong answer! Try again 🙃");
+          return;
+        }
+
+        greetingCard.style.display = "none";
+        mainContent.style.display = "block";
+        bgm.play();
+
+        let message = `
+          <div class="heart-icon" aria-hidden="true">💖</div>
+          <h2>Dear Toshima, your sisterhood means the world to me. 💫 Happy Sister's Day! 🎉</h2>
+          <div class="small-hearts">💕 💞 💓 💗 💘 🌸</div>
+        `;
+
+        welcomeBanner.innerHTML = message;
+      });
+    });
+  </script>
+</head>
+<body>
+  <audio id="bg-music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="header">
+    <span class="icon">👭</span>
+    Sister's Day
+    <span class="icon">👭</span>
+  </div>
+
+  <div id="greeting-message" class="card">
+    <h2>Welcome! 🌟</h2>
+    <p>What is your sister's name? Please enter below to receive your Sister's Day message. 💌</p>
+
+    <form id="name-form">
+      <label for="sisterName">Sister's Name</label>
+      <input type="text" id="sisterName" name="sisterName" placeholder="Enter the name..." required autocomplete="off">
+      <button type="submit" class="btn-pink">Enter ✨</button>
+    </form>
+  </div>
+
+  <main id="main-content" style="display:none;">
+    <section id="welcome-banner" class="card"></section>
+    <section class="image-grid">
+      <article class="img-card">
+        <img src="1.jpg" alt="Sisterly Moments">
+        <div class="img-caption">Sisterly Moments 😊</div>
+      </article>
+      <article class="img-card">
+        <img src="2.jpg" alt="Bond of Love">
+        <div class="img-caption">Bond of Love 💖</div>
+      </article>
+      <article class="img-card">
+        <img src="3.jpg" alt="Unbreakable Sisterhood">
+        <div class="img-caption">Unbreakable Sisterhood 🌟</div>
+      </article>
+    </section>
+    <section class="card">
+      <h2>Forever & Always, Toshima! ❤️</h2>
+      <p>
+        These pictures represent just a glimpse of the beautiful sisterhood we share. 
+        Every laugh, every adventure, every moment of support - they all make our bond stronger. 
+        Thank you for being the most wonderful sister anyone could ask for. 
+        Here's to creating many more amazing memories together! 🎈
+      </p>
+      <div class="small-hearts">💗💓💖💘💞💝</div>
+    </section>
+    <div class="footer-message">Happy Sister's Day, Toshima! 🎉💐🌸✨</div>
+  </main>
+
+  <div class="heart-container">
+    <div class="heart" style="left: 10%;">💖</div>
+    <div class="heart" style="left: 25%; animation-delay: 1s;">💗</div>
+    <div class="heart" style="left: 40%; animation-delay: 2s;">💕</div>
+    <div class="heart" style="left: 60%; animation-delay: 3s;">💞</div>
+    <div class="heart" style="left: 80%; animation-delay: 4s;">💘</div>
+  </div>
+</body>
+</html>
