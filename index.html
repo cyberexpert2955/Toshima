@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sister's Day Wish</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* General Body Styling */
+    body {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(to bottom right, #e1f5fe, #fce4ec);
+      color: #333;
+      text-align: center;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    /* Animated Background Overlay (New) */
+    .background-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at top left, rgba(255, 200, 220, 0.3), transparent 50%),
+                  radial-gradient(circle at bottom right, rgba(180, 220, 255, 0.3), transparent 50%);
+      animation: backgroundPulse 10s infinite alternate ease-in-out;
+      z-index: -2; /* Below heart container */
+    }
+
+    /* Header Styling */
+    .header {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.5rem;
+      margin: 2rem 0 1rem;
+      color: #ff4081;
+      font-weight: 700;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+      letter-spacing: 2px;
+      animation: bounceIn 1s ease-out;
+      z-index: 2; /* Ensure header is above login card */
+      position: relative; /* For z-index to work */
+    }
+    .header .icon {
+      display: inline-block;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    /* Card Styling */
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      margin: 2rem auto;
+      padding: 2.5rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      max-width: 650px;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s ease-out, box-shadow 0.4s ease-out, opacity 0.7s ease-out, transform 0.7s ease-out; /* Increased transition duration */
+      z-index: 1;
+    }
+    .card:hover {
+      transform: translateY(-15px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(255, 105, 180, 0.5);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border-radius: 2rem;
+      background: linear-gradient(45deg, #ff69b4, #ff1493, #8a2be2);
+      z-index: -1;
+      filter: blur(15px);
+      opacity: 0;
+      transition: opacity 0.5s ease-out;
+    }
+    .card:hover::before {
+      opacity: 0.7;
+    }
+
+    /* Button Styling */
+    .btn-pink {
+      background: linear-gradient(to right, #ff69b4, #ff1493);
+      color: white;
+      border: none;
+      padding: 0.9rem 2rem;
+      border-radius: 30px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: background 0.4s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: relative; /* For pseudo-elements */
+      overflow: hidden; /* For ripple effect */
+    }
+    .btn-pink:hover {
+      background: linear-gradient(to right, #ff1493, #ff69b4);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+    .btn-pink:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    /* Ripple effect for button (New) */
+    .btn-pink::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.7);
+      width: 100px;
+      height: 100px;
+      margin-top: -50px;
+      margin-left: -50px;
+      opacity: 0;
+      transition: all 0.7s ease-out;
+      transform: scale(0);
+    }
+    .btn-pink:active::after {
+      transform: scale(1);
+      opacity: 1;
+      transition: 0s;
+    }
+
+
+    /* Input Field Styling */
+    input[type="text"] {
+      padding: 0.8rem 1rem;
+      border: 2px solid #ffc0cb;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      width: calc(100% - 2rem);
+      max-width: 300px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      background-color: #fff;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #ff69b4;
+      box-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
+      background-color: #fffafa; /* Light pink background on focus */
+    }
+    input[type="text"]:hover {
+      border-color: #ff85a2; /* Slightly darker pink on hover */
+    }
+
+    /* Image Grid Styling */
+    .image-grid {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      padding: 2rem 1rem;
+    }
+    .img-card {
+      background: #fff;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      max-width: 220px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease;
+      animation: float 3s ease-in-out infinite;
+      cursor: pointer;
+    }
+    .img-card:hover {
+      transform: translateY(-15px) rotate(2deg);
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.8);
+      filter: brightness(1.2) saturate(1.1);
+    }
+    .img-card img {
+      width: 100%;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .img-card:hover img {
+      transform: scale(1.1);
+    }
+    .img-caption {
+      padding: 0.7rem;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    /* Footer Message Styling */
+    .footer-message {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: #ff4081;
+      margin: 3rem 0 2rem;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 2s ease-out, slideUp 1s ease-out;
+    }
+
+    /* Small Hearts Styling */
+    .small-hearts {
+      margin-top: 1.5rem;
+      font-size: 1.8rem;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+    .heart-icon {
+      font-size: 4rem;
+      animation: beat 1s infinite alternate;
+    }
+
+    /* Heart Animation Styles */
+    @keyframes floatHearts {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.8);
+        opacity: 0;
+      }
+    }
+
+    .heart-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 2.5rem;
+      animation: floatHearts 8s linear infinite;
+      color: #ff69b4;
+      opacity: 0.6;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+    /* Individual heart delays for staggered animation */
+    .heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .heart:nth-child(2) { left: 20%; animation-delay: 1.5s; font-size: 2rem; }
+    .heart:nth-child(3) { left: 35%; animation-delay: 3s; }
+    .heart:nth-child(4) { left: 50%; animation-delay: 4.5s; font-size: 3rem; }
+    .heart:nth-child(5) { left: 65%; animation-delay: 6s; }
+    .heart:nth-child(6) { left: 80%; animation-delay: 7.5s; font-size: 2.2rem; }
+    .heart:nth-child(7) { left: 90%; animation-delay: 9s; }
+
+
+    /* Floating effect for images */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-8px) rotate(-1deg);
+      }
+    }
+
+    /* New Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); opacity: 1; }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* Background Pulse Animation (New) */
+    @keyframes backgroundPulse {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 100% 100%; }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header {
+        font-size: 2.5rem;
+      }
+      .card {
+        margin: 1rem auto;
+        padding: 1.5rem;
+        border-radius: 1rem;
+      }
+      .btn-pink {
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+      }
+      .img-card {
+        max-width: 150px;
+      }
+      .img-caption {
+        font-size: 1rem;
+      }
+      .footer-message {
+        font-size: 1.2rem;
+      }
+      .small-hearts {
+        font-size: 1.2rem;
+      }
+      .heart-icon {
+        font-size: 2.5rem;
+      }
+      .heart {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("name-form");
+      const input = document.getElementById("sisterName");
+      const greetingCard = document.getElementById("greeting-message");
+      const mainContent = document.getElementById("main-content");
+      const welcomeBanner = document.getElementById("welcome-banner");
+      const footerMessage = document.getElementById("dynamic-footer-message");
+      const bgm = document.getElementById("bg-music");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const name = input.value.trim();
+
+        // Check if the input is empty
+        if (!name) {
+          input.style.animation = 'shake 0.5s';
+          input.addEventListener('animationend', () => {
+            input.style.animation = '';
+          });
+          return; // Stop execution if empty
+        }
+
+        // Check if the input is exactly "toshima" (case-insensitive)
+        if (name.toLowerCase() !== 'toshima') {
+          // If not "toshima", shake the input and clear it
+          input.style.animation = 'shake 0.5s';
+          input.addEventListener('animationend', () => {
+            input.style.animation = '';
+            input.value = ''; // Clear the input field
+            alert("Wrong answer! Try again 💭"); // This is the updated alert message
+          });
+          return; // Stop execution
+        }
+
+        // If the name is "toshima", proceed with the rest of the logic
+        // Start background music
+        bgm.play();
+
+        // Animate out the greeting card
+        greetingCard.style.opacity = 0;
+        greetingCard.style.transform = 'scale(0.8) translateY(-50px)'; // Scale down and move up
+        
+        // After animation, hide and show main content
+        setTimeout(() => {
+          greetingCard.style.display = "none";
+          mainContent.style.display = "block";
+          
+          // Prepare main content for animation in
+          mainContent.style.opacity = 0;
+          mainContent.style.transform = 'translateY(50px) scale(0.9)'; // Start slightly below and scaled down
+          
+          // Animate main content in
+          setTimeout(() => {
+            mainContent.style.transition = 'opacity 1s ease-out, transform 1s ease-out';
+            mainContent.style.opacity = 1;
+            mainContent.style.transform = 'translateY(0) scale(1)';
+          }, 50); // Small delay to ensure display:block takes effect
+
+          // Dynamically insert the entered name
+          let welcomeMessage = `
+            <div class="heart-icon" aria-hidden="true">💖</div>
+            <h2>Dear ${name}, your sisterhood means the world to me. 💫 Happy Sister's Day! 🎉</h2>
+            <div class="small-hearts">💕 💞 💓 💗 💘 🌸</div>
+          `;
+          welcomeBanner.innerHTML = welcomeMessage;
+
+          document.getElementById("main-message-name").textContent = name;
+          footerMessage.textContent = `Happy Sister's Day, ${name}! 🎉💐🌸✨`;
+
+        }, 700); // Match this delay with the greetingCard transition duration
+      });
+    });
+  </script>
+</head>
+<body>
+  <audio id="bg-music" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-sunny.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="background-overlay"></div> <!-- New animated background overlay -->
+
+  <div class="header">
+    <span class="icon">👭</span>
+    Sister's Day
+    <span class="icon">👭</span>
+  </div>
+
+  <div id="greeting-message" class="card">
+    <h2>Welcome! 🌟</h2>
+    <p>What is your sister's name? Please enter below to receive your Sister's Day message. 💌</p>
+
+    <form id="name-form">
+      <label for="sisterName">Sister's Name</label>
+      <input type="text" id="sisterName" name="sisterName" placeholder="Enter the name..." required autocomplete="off">
+      <button type="submit" class="btn-pink">Enter ✨</button>
+    </form>
+  </div>
+
+  <main id="main-content" style="display:none; opacity:0;">
+    <section id="welcome-banner" class="card"></section>
+    <section class="image-grid">
+      <article class="img-card">
+        <img src="1.jpg" alt="Sisterly Moments">
+        <div class="img-caption">Sisterly Moments 😊</div>
+      </article>
+      <article class="img-card">
+        <img src="2.jpg" alt="Bond of Love">
+        <div class="img-caption">Bond of Love 💖</div>
+      </article>
+      <article class="img-card">
+        <img src="3.jpg" alt="Unbreakable Sisterhood 🌟">
+        <div class="img-caption">Unbreakable Sisterhood 🌟</div>
+      </article>
+    </section>
+    <section class="card">
+      <h2>Forever & Always, <span id="main-message-name"></span>! ❤️</h2>
+      <p>
+        These pictures represent just a glimpse of the beautiful sisterhood we share. 
+        Every laugh, every adventure, every moment of support - they all make our bond stronger. 
+        Thank you for being the most wonderful sister anyone could ask for. 
+        Here's to creating many more amazing memories together! 🎈
+      </p>
+      <div class="small-hearts">💗💓💖💘💞💝</div>
+    </section>
+    <div class="footer-message" id="dynamic-footer-message"></div>
+  </main>
+
+  <div class="heart-container">
+    <div class="heart" style="left: 10%;">💖</div>
+    <div class="heart" style="left: 25%; animation-delay: 1s;">💗</div>
+    <div class="heart" style="left: 40%; animation-delay: 2s;">💕</div>
+    <div class="heart" style="left: 60%; animation-delay: 3s;">💞</div>
+    <div class="heart" style="left: 80%; animation-delay: 4s;">💘</div>
+    <div class="heart" style="left: 15%; animation-delay: 5s;">🌸</div>
+    <div class="heart" style="left: 70%; animation-delay: 6.5s;">✨</div>
+  </div>
+</body>
+</html>
